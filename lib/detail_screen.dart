@@ -181,7 +181,7 @@ class _DetailScreenState extends State<DetailScreen> {
 
                   Expanded(
                     child: const TabBarView(
-                      children: [ISINAnalysis(), ProsAndCons()],
+                      children: [ProsAndCons(), ISINAnalysis()],
                     ),
                   ),
                 ],
