@@ -156,7 +156,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                 ),
                               ],
                             ),
-                            const SizedBox(height: 16),
+                            const SizedBox(height: 24),
                           ],
                         ),
                       ),
@@ -166,14 +166,8 @@ class _DetailScreenState extends State<DetailScreen> {
                         indicatorColor: Colors.blue,
                         tabAlignment: TabAlignment.start,
                         tabs: [
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Tab(child: Text('ISIN Analysis')),
-                          ),
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Tab(child: Text('Pros & Cons')),
-                          ),
+                          Tab(child: Text('ISIN Analysis')),
+                          Tab(child: Text('Pros & Cons')),
                         ],
                       ),
                     ],
