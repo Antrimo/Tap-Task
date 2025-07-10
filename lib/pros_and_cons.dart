@@ -62,9 +62,17 @@ class _ProsAndConsState extends State<ProsAndCons> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'Pros and Cons',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                Row(
+                  children: [
+                    SizedBox(width: 8),
+                    const Text(
+                      'Pros and Cons',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 16),
 
@@ -136,11 +144,7 @@ class _ProsAndConsState extends State<ProsAndCons> {
                               color: Colors.red,
                               shape: BoxShape.circle,
                             ),
-                            child: const Icon(
-                              Icons.error_outline,
-                              size: 12,
-                              color: Colors.white,
-                            ),
+                            child: Center(child: Text("!")),
                           ),
                         ),
                         const SizedBox(width: 12),
