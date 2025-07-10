@@ -5,6 +5,8 @@ import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:tap/color.dart';
 import 'package:tap/detail_screen.dart';
+import 'package:tap/models/company_list_model.dart';
+import 'package:tap/services/api_service.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -14,7 +16,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<dynamic> companies = [];
+  List<CompanyListModel> companies = [];
   bool isLoading = true;
 
   @override
@@ -25,26 +27,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> fetchCompanies() async {
     try {
-      final response = await http.get(
-        Uri.parse('https://eol122duf9sy4de.m.pipedream.net/'),
-      );
-
-      if (response.statusCode == 200) {
-        final data = json.decode(response.body);
-        if (data['data'] == null || data['data'].isEmpty) {
-          throw Exception('No companies found');
-        }
-        setState(() {
-          companies = data['data'];
-          isLoading = false;
-        });
-      } else {
-        throw Exception('Failed to load companies');
+      final fetchedCompanies = await ApiService.fetchList();
+      if (fetchedCompanies.isEmpty) {
+        throw Exception('No companies found');
       }
+      setState(() {
+        companies = fetchedCompanies;
+        isLoading = false;
+      });
     } catch (e) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text('Error loading data: $e')));
+      print('Error fetching companies: $e');
     }
   }
 
@@ -127,7 +119,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         ),
                                         child: CircleAvatar(
                                           backgroundImage: NetworkImage(
-                                            company['logo'],
+                                            company.logo,
                                           ),
                                           radius: 18,
                                           backgroundColor: Colors.grey.shade200,
@@ -145,9 +137,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                           children: [
                                             Text.rich(
                                               TextSpan(
-                                                text: company['isin'].substring(
+                                                text: company.isin.substring(
                                                   0,
-                                                  company['isin'].length - 4,
+                                                  company.isin.length - 4,
                                                 ),
                                                 style: TextStyle(
                                                   fontSize: 14,
@@ -157,10 +149,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 ),
                                                 children: [
                                                   TextSpan(
-                                                    text: company['isin']
+                                                    text: company.isin
                                                         .substring(
-                                                          company['isin']
-                                                                  .length -
+                                                          company.isin.length -
                                                               4,
                                                         ),
                                                     style: const TextStyle(
@@ -177,7 +168,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             ),
                                             const SizedBox(height: 2),
                                             Text(
-                                              "${company['rating']} · ${company['company_name']}",
+                                              "${company.rating} · ${company.companyName}",
                                               style: TextStyle(
                                                 fontSize: 10,
                                                 overflow: TextOverflow.ellipsis,
