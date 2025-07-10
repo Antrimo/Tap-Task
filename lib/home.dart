@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:tap/color.dart';
 import 'package:tap/detail_screen.dart';
@@ -97,6 +98,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             children: companies.map((company) {
                               return GestureDetector(
                                 onTap: () {
+                                  HapticFeedback.lightImpact();
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
