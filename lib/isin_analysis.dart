@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:tap/graph.dart';
 
-class ISINAnalysis extends StatefulWidget {
-  const ISINAnalysis({super.key});
+class IsinAnalysis extends StatefulWidget {
+  const IsinAnalysis({super.key});
 
   @override
-  State<ISINAnalysis> createState() => _ISINAnalysisState();
+  State<IsinAnalysis> createState() => _IsinAnalysisState();
 }
 
-class _ISINAnalysisState extends State<ISINAnalysis> {
+class _IsinAnalysisState extends State<IsinAnalysis> {
   late Future<Map<String, dynamic>> companyData;
   bool showEbitda = true;
 
@@ -51,23 +51,14 @@ class _ISINAnalysisState extends State<ISINAnalysis> {
             children: [
               Container(
                 padding: EdgeInsets.all(16),
-                height: 400,
                 width: double.infinity,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(12.0),
-                  boxShadow: [
-                    BoxShadow(
-                      color: const Color.fromARGB(
-                        255,
-                        15,
-                        11,
-                        11,
-                      ).withOpacity(0.1),
-                      blurRadius: 10.0,
-                      offset: const Offset(0, 2),
-                    ),
-                  ],
+                  border: Border.all(
+                    color: const Color(0xFFE2E8F0),
+                    width: 1.0,
+                  ),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -78,68 +69,81 @@ class _ISINAnalysisState extends State<ISINAnalysis> {
                           "COMPANY FINANCIALS",
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
-                            fontSize: 14,
-                            letterSpacing: 0.08 * 14,
+                            fontSize: 10,
+                            letterSpacing: 0.08 * 12,
                             height: 1.5,
                             color: Colors.grey,
                           ),
                         ),
                         const Spacer(),
                         Container(
+                          height: 30,
                           decoration: BoxDecoration(
                             color: const Color(0xFFF4F4F4),
                             borderRadius: BorderRadius.circular(30),
                           ),
-                          padding: const EdgeInsets.all(4),
-                          child: Row(
-                            children: [
-                              toggleButton("EBITDA", showEbitda, () {
-                                setState(() {
-                                  showEbitda = true;
-                                });
-                              }, true),
+                          child: Padding(
+                            padding: const EdgeInsets.all(2.0),
+                            child: Row(
+                              children: [
+                                toggleButton("EBITDA", showEbitda, () {
+                                  setState(() {
+                                    showEbitda = true;
+                                  });
+                                }, true),
 
-                              toggleButton("Revenue", !showEbitda, () {
-                                setState(() {
-                                  showEbitda = false;
-                                });
-                              }, false),
-                            ],
+                                toggleButton("Revenue", !showEbitda, () {
+                                  setState(() {
+                                    showEbitda = false;
+                                  });
+                                }, false),
+                              ],
+                            ),
                           ),
                         ),
                       ],
                     ),
                     const SizedBox(height: 16),
                     Graph(showEbitda: showEbitda),
-
                   ],
                 ),
               ),
               const SizedBox(height: 16),
               Container(
-                height: 450,
                 padding: const EdgeInsets.all(16.0),
                 width: double.infinity,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(12.0),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
-                      blurRadius: 10.0,
-                      offset: const Offset(0, 2),
-                    ),
-                  ],
+                  border: Border.all(
+                    color: const Color(0xFFE2E8F0),
+                    width: 1.0,
+                  ),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Issuer Details',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.info_outline_rounded,
+                          color: Colors.grey.shade900,
+                        ),
+                        const SizedBox(width: 8),
+                        const Text(
+                          'Issuer Details',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            height: 1.5,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Divider(
+                      color: Colors.grey.shade300,
+                      thickness: 1,
+                      height: 24,
                     ),
                     const SizedBox(height: 8),
                     issuerDetails(
@@ -187,8 +191,25 @@ Widget issuerDetails(String label, String value) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      Text("$label:", style: const TextStyle(fontWeight: FontWeight.w600)),
-      Text(value),
+      Text(
+        label,
+        style: TextStyle(
+          color: Colors.blue.shade700,
+          fontSize: 12,
+          fontWeight: FontWeight.w500,
+          height: 1.5,
+        ),
+      ),
+      const SizedBox(height: 6),
+      Text(
+        value,
+        style: TextStyle(
+          color: Colors.grey.shade900,
+          fontSize: 14,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+      const SizedBox(height: 30),
     ],
   );
 }
@@ -202,7 +223,7 @@ Widget toggleButton(
   return GestureDetector(
     onTap: onTap,
     child: Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 8),
       decoration: BoxDecoration(
         color: selected ? Colors.white : Colors.transparent,
         borderRadius: BorderRadius.only(
@@ -220,11 +241,14 @@ Widget toggleButton(
               : (selected ? Radius.zero : const Radius.circular(30)),
         ),
       ),
-      child: Text(
-        text,
-        style: TextStyle(
-          fontWeight: FontWeight.w500,
-          color: selected ? Colors.black : Colors.grey,
+      child: Center(
+        child: Text(
+          text,
+          style: TextStyle(
+            fontSize: 10,
+            fontWeight: FontWeight.w500,
+            color: selected ? Colors.black : Colors.grey,
+          ),
         ),
       ),
     ),

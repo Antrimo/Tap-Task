@@ -49,9 +49,15 @@ class _GraphState extends State<Graph> {
                   sideTitles: SideTitles(
                     showTitles: true,
                     getTitlesWidget: (value, n) {
-                      if (value == 1) return const Text('₹1');
-                      if (value == 2) return const Text('₹2');
-                      if (value == 3) return const Text('₹3');
+                      if (value == 1) {
+                        return const Text('₹1', style: TextStyle(fontSize: 10));
+                      }
+                      if (value == 2) {
+                        return const Text('₹2', style: TextStyle(fontSize: 10));
+                      }
+                      if (value == 3) {
+                        return const Text('₹3', style: TextStyle(fontSize: 10));
+                      }
                       return const Text('');
                     },
                   ),
