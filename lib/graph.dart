@@ -2,23 +2,22 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 class Graph extends StatefulWidget {
-  const Graph({super.key});
+  final bool showEbitda;
+
+  const Graph({super.key, required this.showEbitda});
 
   @override
   State<Graph> createState() => _GraphState();
 }
 
 class _GraphState extends State<Graph> {
-  bool showEbitda = true;
-
   final List<double> ebitdaValues = List.generate(12, (_) => 1.0);
-  final List<double> revenueValues = List.generate(12, (_) => 0.7);
+  final List<double> revenueValues = List.generate(12, (_) => 2.0);
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const SizedBox(height: 16),
         AspectRatio(
           aspectRatio: 1.6,
           child: BarChart(
@@ -30,14 +29,14 @@ class _GraphState extends State<Graph> {
                   x: index,
                   barRods: [
                     BarChartRodData(
-                      toY: showEbitda
+                      toY: widget.showEbitda
                           ? ebitdaValues[index]
-                          : ebitdaValues[index],
+                          : revenueValues[index],
                       color: Colors.blueGrey,
-                      width: 14,
+                      width: 16,
                       borderRadius: BorderRadius.circular(4),
                       backDrawRodData: BackgroundBarChartRodData(
-                        show: true,
+                        show: widget.showEbitda,
                         toY: 2,
                         color: Colors.blue[100],
                       ),
@@ -50,10 +49,9 @@ class _GraphState extends State<Graph> {
                   sideTitles: SideTitles(
                     showTitles: true,
                     getTitlesWidget: (value, n) {
-                      if (value == 0) return const Text('');
-                      if (value == 1) return const Text('1');
-                      if (value == 2) return const Text('2');
-                      if (value == 3) return const Text('3');
+                      if (value == 1) return const Text('₹1');
+                      if (value == 2) return const Text('₹2');
+                      if (value == 3) return const Text('₹3');
                       return const Text('');
                     },
                   ),
