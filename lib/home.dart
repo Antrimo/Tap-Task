@@ -52,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: AppColors.primary,
+        backgroundColor: AppColor.primary,
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.5),
           child: Column(
@@ -71,14 +71,14 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: 16),
               const SearchInput(),
               const SizedBox(height: 24),
-              const Text(
+              Text(
                 "SUGGESTED RESULTS",
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: 16,
                   height: 1.5,
                   letterSpacing: 0.08 * 16,
-                  color: Colors.black,
+                  color: AppColor.primaryFont,
                 ),
               ),
               const SizedBox(height: 8),
@@ -149,11 +149,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   0,
                                                   company['isin'].length - 4,
                                                 ),
-                                                style: const TextStyle(
+                                                style: TextStyle(
                                                   fontSize: 14,
                                                   height: 1.5,
                                                   letterSpacing: 0.7,
-                                                  color: Colors.grey,
+                                                  color: Colors.grey.shade800,
                                                 ),
                                                 children: [
                                                   TextSpan(
@@ -178,10 +178,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                             const SizedBox(height: 2),
                                             Text(
                                               "${company['rating']} · ${company['company_name']}",
-                                              style: const TextStyle(
+                                              style: TextStyle(
                                                 fontSize: 10,
                                                 overflow: TextOverflow.ellipsis,
-                                                color: Colors.black87,
+                                                color: AppColor.primaryFont,
                                               ),
                                             ),
                                           ],
@@ -225,7 +225,7 @@ class SearchInput extends StatelessWidget {
       ),
       padding: const EdgeInsets.symmetric(horizontal: 12),
       child: Row(
-        children: const [
+        children: [
           Icon(Icons.search, color: Colors.grey, size: 20),
           SizedBox(width: 12),
           Expanded(
@@ -239,7 +239,7 @@ class SearchInput extends StatelessWidget {
                   fontSize: 12,
                   fontWeight: FontWeight.w400,
                   height: 1.5,
-                  color: Color(0xFFB5B5B5),
+                  color: AppColor.primaryFont,
                 ),
                 border: InputBorder.none,
               ),

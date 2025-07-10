@@ -13,6 +13,7 @@ class ISINAnalysis extends StatefulWidget {
 
 class _ISINAnalysisState extends State<ISINAnalysis> {
   late Future<Map<String, dynamic>> companyData;
+  bool showEbitda = true;
 
   Future<Map<String, dynamic>> fetchData() async {
     final response = await http.get(
@@ -49,8 +50,8 @@ class _ISINAnalysisState extends State<ISINAnalysis> {
           child: Column(
             children: [
               Container(
-                padding: EdgeInsets.all(20),
-                height: 350,
+                padding: EdgeInsets.all(16),
+                height: 400,
                 width: double.infinity,
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -68,7 +69,51 @@ class _ISINAnalysisState extends State<ISINAnalysis> {
                     ),
                   ],
                 ),
-                child: Center(child: Graph()),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          "COMPANY FINANCIALS",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 14,
+                            letterSpacing: 0.08 * 14,
+                            height: 1.5,
+                            color: Colors.grey,
+                          ),
+                        ),
+                        const Spacer(),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFF4F4F4),
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          padding: const EdgeInsets.all(4),
+                          child: Row(
+                            children: [
+                              toggleButton("EBITDA", showEbitda, () {
+                                setState(() {
+                                  showEbitda = true;
+                                });
+                              }, true),
+
+                              toggleButton("Revenue", !showEbitda, () {
+                                setState(() {
+                                  showEbitda = false;
+                                });
+                              }, false),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+                    Graph(showEbitda: showEbitda),
+
+                  ],
+                ),
               ),
               const SizedBox(height: 16),
               Container(
@@ -145,5 +190,43 @@ Widget issuerDetails(String label, String value) {
       Text("$label:", style: const TextStyle(fontWeight: FontWeight.w600)),
       Text(value),
     ],
+  );
+}
+
+Widget toggleButton(
+  String text,
+  bool selected,
+  VoidCallback onTap,
+  bool isLeft,
+) {
+  return GestureDetector(
+    onTap: onTap,
+    child: Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      decoration: BoxDecoration(
+        color: selected ? Colors.white : Colors.transparent,
+        borderRadius: BorderRadius.only(
+          topLeft: isLeft
+              ? const Radius.circular(30)
+              : (selected ? Radius.zero : const Radius.circular(30)),
+          bottomLeft: isLeft
+              ? const Radius.circular(30)
+              : (selected ? Radius.zero : const Radius.circular(30)),
+          topRight: !isLeft
+              ? const Radius.circular(30)
+              : (selected ? Radius.zero : const Radius.circular(30)),
+          bottomRight: !isLeft
+              ? const Radius.circular(30)
+              : (selected ? Radius.zero : const Radius.circular(30)),
+        ),
+      ),
+      child: Text(
+        text,
+        style: TextStyle(
+          fontWeight: FontWeight.w500,
+          color: selected ? Colors.black : Colors.grey,
+        ),
+      ),
+    ),
   );
 }

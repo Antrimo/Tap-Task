@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:tap/color.dart';
 import 'package:tap/isin_analysis.dart';
 import 'package:tap/pros_and_cons.dart';
 
@@ -128,14 +129,16 @@ class _DetailScreenState extends State<DetailScreen> {
                                     vertical: 4,
                                   ),
                                   decoration: BoxDecoration(
-                                    color: Colors.blue.shade100,
+                                    color: Colors.blue.withOpacity(0.2),
                                     borderRadius: BorderRadius.circular(5),
                                   ),
                                   child: Text(
                                     "ISIN: ${data['isin']}",
                                     style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.blue,
+                                      fontWeight: FontWeight.w600,
+                                      color: AppColor.isin,
+                                      height: 1.5,
+                                      letterSpacing: 0.08 * 16,
                                     ),
                                   ),
                                 ),
@@ -146,12 +149,17 @@ class _DetailScreenState extends State<DetailScreen> {
                                     vertical: 4,
                                   ),
                                   decoration: BoxDecoration(
-                                    color: Colors.green.shade100,
+                                    color: Colors.green.withOpacity(0.1),
                                     borderRadius: BorderRadius.circular(5),
                                   ),
                                   child: Text(
                                     data['status'],
-                                    style: const TextStyle(color: Colors.green),
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      color: AppColor.green,
+                                      height: 1.5,
+                                      letterSpacing: 0.08 * 16,
+                                    ),
                                   ),
                                 ),
                               ],
