@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:tap/graph.dart';
 
 class ISINAnalysis extends StatefulWidget {
   const ISINAnalysis({super.key});
@@ -48,19 +49,26 @@ class _ISINAnalysisState extends State<ISINAnalysis> {
           child: Column(
             children: [
               Container(
-                height: 20,
+                padding: EdgeInsets.all(20),
+                height: 350,
                 width: double.infinity,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(12.0),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
+                      color: const Color.fromARGB(
+                        255,
+                        15,
+                        11,
+                        11,
+                      ).withOpacity(0.1),
                       blurRadius: 10.0,
                       offset: const Offset(0, 2),
                     ),
                   ],
                 ),
+                child: Center(child: Graph()),
               ),
               const SizedBox(height: 16),
               Container(
