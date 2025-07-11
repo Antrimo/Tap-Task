@@ -44,15 +44,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 "SUGGESTED RESULTS",
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
-                  fontSize: 16,
+                  fontSize: 12,
                   height: 1.5,
-                  letterSpacing: 0.08 * 16,
+                  letterSpacing: 0.08 * 12,
                   color: AppColor.primaryFont,
                 ),
               ),
               const SizedBox(height: 8),
               Expanded(
-                child: BlocBuilder<CompanyBloc, List<CompanyListModel>>(
+                child: BlocBuilder<CompanyListCubit, List<CompanyListModel>>(
                   builder: (context, companies) {
                     if (companies.isEmpty) {
                       return Center(child: CircularProgressIndicator());
@@ -96,8 +96,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                       decoration: BoxDecoration(
                                         shape: BoxShape.circle,
                                         border: Border.all(
-                                          color: Colors.grey,
-                                          width: 0.5,
+                                          color: AppColor.border,
+                                          width: 1,
                                         ),
                                       ),
                                       child: CircleAvatar(
@@ -105,7 +105,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                           company.logo,
                                         ),
                                         radius: 18,
-                                        backgroundColor: Colors.grey.shade200,
                                       ),
                                     ),
 
@@ -148,7 +147,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           ),
                                           const SizedBox(height: 2),
                                           Text(
-                                            "${company.rating} · ${company.companyName}",
+                                            "${company.rating} ● ${company.companyName}",
                                             style: TextStyle(
                                               fontSize: 10,
                                               overflow: TextOverflow.ellipsis,
@@ -193,13 +192,13 @@ class SearchInput extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
         color: Colors.white,
-        border: Border.all(width: 1, color: const Color(0xFFE0E0E0)),
+        border: Border.all(width: 1, color: AppColor.border),
         borderRadius: BorderRadius.circular(8),
       ),
       padding: const EdgeInsets.symmetric(horizontal: 12),
       child: Row(
         children: [
-          Icon(Icons.search, color: Colors.grey, size: 20),
+          Icon(Icons.search, color: Colors.grey.shade500, size: 20),
           SizedBox(width: 12),
           Expanded(
             child: TextField(

@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       home: BlocProvider(
         create: (context) =>
-            CompanyBloc(apiServices: ApiServices())..fetchCompanies(),
+            CompanyListCubit(apiServices: ApiServices())..fetchCompanies(),
         child: HomeScreen(),
       ),
     );

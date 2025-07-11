@@ -3,10 +3,10 @@ import 'package:tap/models/company_detail_model.dart';
 import 'package:tap/models/company_list_model.dart';
 import 'package:tap/services/api_services.dart';
 
-class CompanyBloc extends Cubit<List<CompanyListModel>> {
+class CompanyListCubit extends Cubit<List<CompanyListModel>> {
   final ApiServices apiServices;
 
-  CompanyBloc({required this.apiServices}) : super([]);
+  CompanyListCubit({required this.apiServices}) : super([]);
 
   Future<void> fetchCompanies() async {
     try {
@@ -18,8 +18,6 @@ class CompanyBloc extends Cubit<List<CompanyListModel>> {
   }
 }
 
-
-
 class CompanyDetailCubit extends Cubit<CompanyDetailModel?> {
   final ApiServices apiServices;
 
@@ -27,11 +25,11 @@ class CompanyDetailCubit extends Cubit<CompanyDetailModel?> {
 
   Future<void> fetchDetail() async {
     try {
-      emit(null); 
+      emit(null);
       final detail = await apiServices.fetchDetail();
       emit(detail);
     } catch (e) {
-      emit(null); 
+      emit(null);
     }
   }
 }
