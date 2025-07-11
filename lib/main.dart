@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tap/detail_screen.dart';
-import 'package:tap/graph.dart';
-import 'package:tap/home.dart';
+import 'package:tap/presentation/screens/home_screen.dart';
 
 void main() {
   runApp(const MyApp());

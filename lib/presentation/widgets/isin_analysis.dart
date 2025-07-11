@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:tap/graph.dart';
+import 'package:tap/presentation/widgets/graph.dart';
 
 class IsinAnalysis extends StatefulWidget {
   const IsinAnalysis({super.key});

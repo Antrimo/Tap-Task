@@ -12,7 +12,7 @@ class Graph extends StatefulWidget {
 
 class _GraphState extends State<Graph> {
   final List<double> ebitdaValues = List.generate(12, (_) => 1.0);
-  final List<double> revenueValues = List.generate(12, (_) => 2.0);
+  final List<double> revenueValues = List.generate(12, (_) => 1.7);
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +37,7 @@ class _GraphState extends State<Graph> {
                       borderRadius: BorderRadius.circular(4),
                       backDrawRodData: BackgroundBarChartRodData(
                         show: widget.showEbitda,
-                        toY: 2,
+                        toY: 1.7,
                         color: Colors.blue[100],
                       ),
                     ),

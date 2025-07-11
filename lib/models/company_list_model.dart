@@ -22,14 +22,4 @@ class CompanyListModel {
       tags: List<String>.from(json['tags'] ?? []),
     );
   }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'logo': logo,
-      'isin': isin,
-      'rating': rating,
-      'company_name': companyName,
-      'tags': tags,
-    };
-  }
 }
