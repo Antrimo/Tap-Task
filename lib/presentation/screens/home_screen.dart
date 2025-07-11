@@ -6,8 +6,8 @@ import 'package:tap/bloc/search_cubit.dart';
 import 'package:tap/color.dart';
 import 'package:tap/presentation/screens/detail_screen.dart';
 import 'package:tap/models/company_list_model.dart';
-import 'package:tap/presentation/widgets/highlight.dart';
-import 'package:tap/presentation/widgets/search.dart';
+import 'package:tap/presentation/widgets/highlight_widget.dart';
+import 'package:tap/presentation/widgets/search_widget.dart';
 import 'package:tap/services/api_services.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -39,7 +39,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 16),
-                const SearchInput(),
+                const SearchWidget(),
                 const SizedBox(height: 24),
                 BlocBuilder<SearchCubit, String>(
                   builder: (context, query) {

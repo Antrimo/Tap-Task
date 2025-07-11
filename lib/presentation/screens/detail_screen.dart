@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tap/bloc/company_cubit.dart';
 import 'package:tap/color.dart';
 import 'package:tap/models/company_detail_model.dart';
-import 'package:tap/presentation/widgets/isin_analysis.dart';
-import 'package:tap/presentation/widgets/pros_and_cons.dart';
+import 'package:tap/presentation/widgets/isin_analysis_widget.dart';
+import 'package:tap/presentation/widgets/pros_and_cons_widget.dart';
 
 class DetailScreen extends StatelessWidget {
   const DetailScreen({super.key});
@@ -84,10 +84,7 @@ class DetailScreen extends StatelessWidget {
                               ),
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(12),
-                                child: Image.network(
-                                  data.logo,
-                                  fit: BoxFit.cover,
-                                ),
+                                child: Image.network(data.logo),
                               ),
                             ),
 
@@ -115,7 +112,7 @@ class DetailScreen extends StatelessWidget {
                                     vertical: 4,
                                   ),
                                   decoration: BoxDecoration(
-                                    color: Colors.blue.withOpacity(0.2),
+                                    color: Colors.blue.withOpacity(0.1),
                                     borderRadius: BorderRadius.circular(5),
                                   ),
                                   child: Text(
@@ -170,8 +167,8 @@ class DetailScreen extends StatelessWidget {
                   Expanded(
                     child: TabBarView(
                       children: [
-                        const IsinAnalysis(),
-                        ProsAndCons(
+                        const IsinAnalysisWidget(),
+                        ProsAndConsWidget(
                           pros: data.prosAndCons.pros,
                           cons: data.prosAndCons.cons,
                         ),

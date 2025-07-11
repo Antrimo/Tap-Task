@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tap/color.dart';
 import 'package:tap/bloc/search_cubit.dart';
 
-class SearchInput extends StatelessWidget {
-  const SearchInput({super.key});
+class SearchWidget extends StatelessWidget {
+  const SearchWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

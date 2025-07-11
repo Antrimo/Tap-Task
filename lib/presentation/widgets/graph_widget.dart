@@ -1,16 +1,16 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
-class Graph extends StatefulWidget {
+class GraphWidget extends StatefulWidget {
   final bool showEbitda;
 
-  const Graph({super.key, required this.showEbitda});
+  const GraphWidget({super.key, required this.showEbitda});
 
   @override
-  State<Graph> createState() => _GraphState();
+  State<GraphWidget> createState() => _GraphWidgetState();
 }
 
-class _GraphState extends State<Graph> {
+class _GraphWidgetState extends State<GraphWidget> {
   final List<double> ebitdaValues = List.generate(12, (_) => 1.0);
   final List<double> revenueValues = List.generate(12, (_) => 1.7);
 
@@ -32,13 +32,15 @@ class _GraphState extends State<Graph> {
                       toY: widget.showEbitda
                           ? ebitdaValues[index]
                           : revenueValues[index],
-                      color: Colors.blueGrey,
+                      color: widget.showEbitda
+                          ? Colors.grey.shade900
+                          : Colors.blue,
                       width: 16,
                       borderRadius: BorderRadius.circular(4),
                       backDrawRodData: BackgroundBarChartRodData(
                         show: widget.showEbitda,
                         toY: 1.7,
-                        color: Colors.blue[100],
+                        color: Colors.lightBlue.shade100,
                       ),
                     ),
                   ],
@@ -95,6 +97,17 @@ class _GraphState extends State<Graph> {
               ),
               gridData: FlGridData(show: true, drawVerticalLine: false),
               borderData: FlBorderData(show: false),
+              extraLinesData: ExtraLinesData(
+                verticalLines: [
+                  VerticalLine(
+                    x: 3.5,
+                    color: Colors
+                        .black, //i dont know why this isnt showing up in graph
+                    strokeWidth: 4,
+                    dashArray: [5, 5],
+                  ),
+                ],
+              ),
             ),
           ),
         ),
