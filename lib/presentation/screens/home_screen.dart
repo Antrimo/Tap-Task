@@ -1,12 +1,9 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:http/http.dart' as http;
 import 'package:tap/color.dart';
-import 'package:tap/detail_screen.dart';
+import 'package:tap/presentation/screens/detail_screen.dart';
 import 'package:tap/models/company_list_model.dart';
-import 'package:tap/services/api_service.dart';
+import 'package:tap/services/api_services.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -22,21 +19,21 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    fetchCompanies();
+    fetchAPI();
   }
 
-  Future<void> fetchCompanies() async {
+  Future<void> fetchAPI() async {
     try {
-      final fetchedCompanies = await ApiService.fetchList();
-      if (fetchedCompanies.isEmpty) {
+      final data = await ApiServices.fetchList();
+      if (data.isEmpty) {
         throw Exception('No companies found');
       }
       setState(() {
-        companies = fetchedCompanies;
+        companies = data;
         isLoading = false;
       });
     } catch (e) {
-      print('Error fetching companies: $e');
+      print('Error:: $e');
     }
   }
 

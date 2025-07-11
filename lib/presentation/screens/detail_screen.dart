@@ -1,9 +1,9 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:tap/color.dart';
-import 'package:tap/isin_analysis.dart';
-import 'package:tap/pros_and_cons.dart';
+import 'package:tap/models/company_detail_model.dart';
+import 'package:tap/presentation/widgets/isin_analysis.dart';
+import 'package:tap/presentation/widgets/pros_and_cons.dart';
+import 'package:tap/services/api_services.dart';
 
 class DetailScreen extends StatefulWidget {
   const DetailScreen({super.key});
@@ -13,36 +13,25 @@ class DetailScreen extends StatefulWidget {
 }
 
 class _DetailScreenState extends State<DetailScreen> {
-  late Future<Map<String, dynamic>> companyData;
-
-  Future<Map<String, dynamic>> fetchData() async {
-    final response = await http.get(
-      Uri.parse('https://eo61q3zd4heiwke.m.pipedream.net/'),
-    );
-    if (response.statusCode == 200) {
-      return json.decode(response.body);
-    } else {
-      throw Exception('Failed to load data');
-    }
-  }
+  late Future<CompanyDetailModel> companyData;
 
   @override
   void initState() {
     super.initState();
-    companyData = fetchData();
+    companyData = ApiServices.fetchDetail();
   }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: FutureBuilder<Map<String, dynamic>>(
+        body: FutureBuilder<CompanyDetailModel>(
           future: companyData,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
             } else if (snapshot.hasError) {
-              return Center(child: Text('Error: ${snapshot.error}'));
+              return Center(child: Text('Error::: ${snapshot.error}'));
             }
 
             final data = snapshot.data!;
@@ -99,23 +88,16 @@ class _DetailScreenState extends State<DetailScreen> {
                                   color: const Color(0xFFE2E8F0),
                                   width: 1.0,
                                 ),
-                                // boxShadow: [
-                                //   BoxShadow(
-                                //     color: Colors.black.withOpacity(0.03),
-                                //     spreadRadius: -1,
-                                //     blurRadius: 6,
-                                //   ),
-                                // ],
                               ),
                               child: Image.network(
-                                data['logo'],
+                                data.logo,
                                 height: 48,
                                 width: 48,
                               ),
                             ),
                             const SizedBox(height: 12),
                             Text(
-                              data['company_name'],
+                              data.companyName,
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16,
@@ -125,7 +107,7 @@ class _DetailScreenState extends State<DetailScreen> {
                             ),
                             const SizedBox(height: 12),
                             Text(
-                              data['description'],
+                              data.description,
                               style: const TextStyle(fontSize: 12, height: 1.5),
                             ),
                             const SizedBox(height: 10),
@@ -141,7 +123,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                     borderRadius: BorderRadius.circular(5),
                                   ),
                                   child: Text(
-                                    "ISIN: ${data['isin']}",
+                                    "ISIN: ${data.isin}",
                                     style: const TextStyle(
                                       fontWeight: FontWeight.w600,
                                       color: AppColor.isin,
@@ -161,7 +143,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                     borderRadius: BorderRadius.circular(5),
                                   ),
                                   child: Text(
-                                    data['status'],
+                                    data.status,
                                     style: const TextStyle(
                                       fontWeight: FontWeight.w600,
                                       color: AppColor.green,
@@ -190,8 +172,14 @@ class _DetailScreenState extends State<DetailScreen> {
                   ),
 
                   Expanded(
-                    child: const TabBarView(
-                      children: [IsinAnalysis(), ProsAndCons()],
+                    child: TabBarView(
+                      children: [
+                        const IsinAnalysis(),
+                        ProsAndCons(
+                          pros: data.prosAndCons.pros,
+                          cons: data.prosAndCons.cons,
+                        ),
+                      ],
                     ),
                   ),
                 ],
