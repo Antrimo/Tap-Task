@@ -1,16 +1,31 @@
-# tap
 
-A new Flutter project.
+# flutter assignment
 
-## Getting Started
+to implement pixel perfect design and animation, with bloc/cubit and freeze packages.
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+## run locally
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+clone the project
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+```bash
+  git clone https://github.com/Antrimo/Tap-Task.git
+```
+
+go to the project directory
+
+```bash
+  cd Tap-Task
+```
+
+install dependencies
+
+```bash
+  flutter pub get
+```
+
+run the app
+
+```bash
+  flutter run 
+```
