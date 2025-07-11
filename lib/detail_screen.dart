@@ -62,11 +62,19 @@ class _DetailScreenState extends State<DetailScreen> {
                         height: 50,
                         width: 50,
                         decoration: BoxDecoration(
+                          color: Colors.white,
                           border: Border.all(
                             color: Colors.grey.shade300,
                             width: 1,
                           ),
                           shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.1),
+                              blurRadius: 2.0,
+                              offset: const Offset(0, 1),
+                            ),
+                          ],
                         ),
                         child: const Icon(Icons.arrow_back),
                       ),
@@ -86,18 +94,18 @@ class _DetailScreenState extends State<DetailScreen> {
                               height: 60,
                               width: 60,
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12),
+                                borderRadius: BorderRadius.circular(16),
                                 border: Border.all(
-                                  color: Colors.grey.shade300,
-                                  width: 1,
+                                  color: const Color(0xFFE2E8F0),
+                                  width: 1.0,
                                 ),
-                                boxShadow: const [
-                                  BoxShadow(
-                                    color: Colors.black12,
-                                    spreadRadius: 2,
-                                    blurRadius: 5,
-                                  ),
-                                ],
+                                // boxShadow: [
+                                //   BoxShadow(
+                                //     color: Colors.black.withOpacity(0.03),
+                                //     spreadRadius: -1,
+                                //     blurRadius: 6,
+                                //   ),
+                                // ],
                               ),
                               child: Image.network(
                                 data['logo'],
@@ -183,7 +191,7 @@ class _DetailScreenState extends State<DetailScreen> {
 
                   Expanded(
                     child: const TabBarView(
-                      children: [ISINAnalysis(), ProsAndCons()],
+                      children: [IsinAnalysis(), ProsAndCons()],
                     ),
                   ),
                 ],

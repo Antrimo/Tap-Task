@@ -50,13 +50,7 @@ class _ProsAndConsState extends State<ProsAndCons> {
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(12.0),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
-                  blurRadius: 10.0,
-                  offset: const Offset(0, 2),
-                ),
-              ],
+              border: Border.all(color: const Color(0xFFE2E8F0), width: 1.0),
             ),
             padding: const EdgeInsets.all(16.0),
             child: Column(
