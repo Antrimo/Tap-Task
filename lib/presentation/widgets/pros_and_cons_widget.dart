@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:tap/color.dart';
 
-class ProsAndCons extends StatelessWidget {
+class ProsAndConsWidget extends StatelessWidget {
   final List<String> pros;
   final List<String> cons;
-  const ProsAndCons({super.key, required this.pros, required this.cons});
+  const ProsAndConsWidget({super.key, required this.pros, required this.cons});
 
   @override
   Widget build(BuildContext context) {
@@ -40,65 +41,74 @@ class ProsAndCons extends StatelessWidget {
             const SizedBox(height: 8),
             ...pros.map(
               (pro) => Padding(
-                padding: const EdgeInsets.only(bottom: 8.0),
+                padding: const EdgeInsets.only(bottom: 24.0),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(top: 2.0),
                       child: Container(
-                        width: 20,
-                        height: 20,
+                        width: 18,
+                        height: 18,
                         decoration: const BoxDecoration(
-                          color: Colors.green,
+                          color: AppColor.check,
                           shape: BoxShape.circle,
                         ),
                         child: const Icon(
                           Icons.check,
                           size: 12,
-                          color: Colors.white,
+                          color: Color.fromRGBO(18, 129, 61, 1),
                         ),
                       ),
                     ),
                     const SizedBox(width: 12),
                     Expanded(
-                      child: Text(pro, style: const TextStyle(fontSize: 14)),
+                      child: Text(
+                        pro,
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: Color.fromRGBO(54, 65, 83, 1),
+                        ),
+                      ),
                     ),
                   ],
                 ),
               ),
             ),
             const SizedBox(height: 16),
-            const Text(
+            Text(
               'Cons',
               style: TextStyle(
                 fontSize: 16,
-                color: Colors.red,
+                color: Color.fromRGBO(180, 83, 9, 1),
                 fontWeight: FontWeight.w600,
               ),
             ),
             const SizedBox(height: 8),
             ...cons.map(
               (con) => Padding(
-                padding: const EdgeInsets.only(bottom: 8.0),
+                padding: const EdgeInsets.only(bottom: 24.0),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 2.0),
-                      child: Container(
-                        width: 20,
-                        height: 20,
-                        decoration: const BoxDecoration(
-                          color: Colors.red,
-                          shape: BoxShape.circle,
-                        ),
-                        child: Center(child: Text("!")),
+                    Container(
+                      width: 18,
+                      height: 18,
+                      decoration: const BoxDecoration(
+                        color: Color.fromRGBO(217, 119, 6, 0.12),
+                        shape: BoxShape.circle,
                       ),
+                      child: Center(child: Text("!")),
                     ),
                     const SizedBox(width: 12),
                     Expanded(
-                      child: Text(con, style: const TextStyle(fontSize: 14)),
+                      child: Text(
+                        con,
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: Color.fromRGBO(100, 116, 139, 1),
+                        ),
+                      ),
                     ),
                   ],
                 ),
