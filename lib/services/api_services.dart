@@ -21,7 +21,7 @@ class ApiServices {
     }
   }
 
-  static Future<CompanyDetailModel> fetchDetail() async {
+  Future<CompanyDetailModel> fetchDetail() async {
     final response = await http.get(Uri.parse(detailURL));
 
     if (response.statusCode == 200) {

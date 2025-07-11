@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tap/models/company_detail_model.dart';
 import 'package:tap/models/company_list_model.dart';
 import 'package:tap/services/api_services.dart';
 
@@ -13,6 +14,24 @@ class CompanyBloc extends Cubit<List<CompanyListModel>> {
       emit(companies);
     } catch (e) {
       emit([]);
+    }
+  }
+}
+
+
+
+class CompanyDetailCubit extends Cubit<CompanyDetailModel?> {
+  final ApiServices apiServices;
+
+  CompanyDetailCubit({required this.apiServices}) : super(null);
+
+  Future<void> fetchDetail() async {
+    try {
+      emit(null); 
+      final detail = await apiServices.fetchDetail();
+      emit(detail);
+    } catch (e) {
+      emit(null); 
     }
   }
 }

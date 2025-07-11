@@ -1,40 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tap/bloc/company_cubit.dart';
 import 'package:tap/color.dart';
 import 'package:tap/models/company_detail_model.dart';
 import 'package:tap/presentation/widgets/isin_analysis.dart';
 import 'package:tap/presentation/widgets/pros_and_cons.dart';
-import 'package:tap/services/api_services.dart';
 
-class DetailScreen extends StatefulWidget {
+class DetailScreen extends StatelessWidget {
   const DetailScreen({super.key});
-
-  @override
-  State<DetailScreen> createState() => _DetailScreenState();
-}
-
-class _DetailScreenState extends State<DetailScreen> {
-  late Future<CompanyDetailModel> companyData;
-
-  @override
-  void initState() {
-    super.initState();
-    companyData = ApiServices.fetchDetail();
-  }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: FutureBuilder<CompanyDetailModel>(
-          future: companyData,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (snapshot.hasError) {
-              return Center(child: Text('Error::: ${snapshot.error}'));
+        body: BlocBuilder<CompanyDetailCubit, CompanyDetailModel?>(
+          builder: (context, data) {
+            if (data == null) {
+              return Center(child: CircularProgressIndicator());
             }
-
-            final data = snapshot.data!;
 
             return DefaultTabController(
               length: 2,

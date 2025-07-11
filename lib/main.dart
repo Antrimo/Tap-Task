@@ -15,7 +15,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: BlocProvider(
-        create: (context) => CompanyBloc(apiServices: ApiServices())..fetchCompanies(),
+        create: (context) =>
+            CompanyBloc(apiServices: ApiServices())..fetchCompanies(),
         child: HomeScreen(),
       ),
     );

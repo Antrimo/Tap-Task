@@ -5,6 +5,7 @@ import 'package:tap/bloc/company_cubit.dart';
 import 'package:tap/color.dart';
 import 'package:tap/presentation/screens/detail_screen.dart';
 import 'package:tap/models/company_list_model.dart';
+import 'package:tap/services/api_services.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -73,7 +74,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => const DetailScreen(),
+                                    builder: (context) => BlocProvider(
+                                      create: (_) => CompanyDetailCubit(
+                                        apiServices: ApiServices(),
+                                      )..fetchDetail(),
+                                      child: DetailScreen(),
+                                    ),
                                   ),
                                 );
                               },
