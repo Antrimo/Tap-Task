@@ -6,12 +6,12 @@ import 'package:tap/bloc/search_cubit.dart';
 import 'package:tap/color.dart';
 import 'package:tap/presentation/screens/detail_screen.dart';
 import 'package:tap/models/company_list_model.dart';
+import 'package:tap/presentation/widgets/highlight.dart';
 import 'package:tap/presentation/widgets/search.dart';
 import 'package:tap/services/api_services.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
-  
 
   @override
   Widget build(BuildContext context) {
@@ -68,11 +68,22 @@ class HomeScreen extends StatelessWidget {
                           }
 
                           final filteredCompanies = companies.where((company) {
-                            return company.isin.toLowerCase().contains(query) ||
-                                company.companyName.toLowerCase().contains(
-                                  query,
-                                ) ||
-                                company.rating.toLowerCase().contains(query);
+                            if (query.isEmpty) return true;
+
+                            final words = query
+                                .toLowerCase()
+                                .split(' ')
+                                .where((word) => word.isNotEmpty)
+                                .toList();
+
+                            return words.every(
+                              (word) =>
+                                  company.isin.toLowerCase().contains(word) ||
+                                  company.companyName.toLowerCase().contains(
+                                    word,
+                                  ) ||
+                                  company.rating.toLowerCase().contains(word),
+                            );
                           }).toList();
 
                           return Container(
@@ -119,16 +130,13 @@ class HomeScreen extends StatelessWidget {
                                           child: Padding(
                                             padding: const EdgeInsets.symmetric(
                                               vertical: 16,
-                                              horizontal: 16,
+                                              horizontal: 12,
                                             ),
                                             child: Row(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.center,
                                               children: [
                                                 Container(
-                                                  padding: const EdgeInsets.all(
-                                                    2,
-                                                  ),
                                                   decoration: BoxDecoration(
                                                     shape: BoxShape.circle,
                                                     border: Border.all(
@@ -136,15 +144,22 @@ class HomeScreen extends StatelessWidget {
                                                       width: 1,
                                                     ),
                                                   ),
-                                                  child: CircleAvatar(
-                                                    backgroundImage:
-                                                        NetworkImage(
-                                                          company.logo,
-                                                        ),
-                                                    radius: 18,
+                                                  child: SizedBox(
+                                                    width: 40,
+                                                    height: 40,
+                                                    child: Center(
+                                                      child: CircleAvatar(
+                                                        backgroundImage:
+                                                            NetworkImage(
+                                                              company.logo,
+                                                            ),
+                                                        radius: 16,
+                                                      ),
+                                                    ),
                                                   ),
                                                 ),
-                                                const SizedBox(width: 10),
+
+                                                const SizedBox(width: 8),
                                                 Expanded(
                                                   child: Column(
                                                     crossAxisAlignment:
@@ -156,55 +171,106 @@ class HomeScreen extends StatelessWidget {
                                                     children: [
                                                       Text.rich(
                                                         TextSpan(
-                                                          text: company.isin
-                                                              .substring(
-                                                                0,
-                                                                company
-                                                                        .isin
-                                                                        .length -
-                                                                    4,
-                                                              ),
-                                                          style: TextStyle(
-                                                            fontSize: 14,
-                                                            height: 1.5,
-                                                            letterSpacing: 0.7,
-                                                            color: Colors
-                                                                .grey
-                                                                .shade800,
-                                                          ),
                                                           children: [
                                                             TextSpan(
-                                                              text: company.isin
-                                                                  .substring(
-                                                                    company
-                                                                            .isin
-                                                                            .length -
-                                                                        4,
-                                                                  ),
-                                                              style: const TextStyle(
-                                                                fontSize: 16,
-                                                                height: 1.5,
-                                                                letterSpacing:
-                                                                    0.7,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w400,
-                                                                color: Colors
-                                                                    .black,
+                                                              children: TextHighlighter.highlight(
+                                                                source: company
+                                                                    .isin
+                                                                    .substring(
+                                                                      0,
+                                                                      company
+                                                                              .isin
+                                                                              .length -
+                                                                          4,
+                                                                    ),
+                                                                query: query,
+                                                                normalStyle: TextStyle(
+                                                                  fontSize: 12,
+                                                                  height: 1.5,
+
+                                                                  color: Colors
+                                                                      .grey
+                                                                      .shade800,
+                                                                ),
+                                                                highlightStyle: TextStyle(
+                                                                  fontSize: 12,
+                                                                  height: 1.5,
+
+                                                                  color: Colors
+                                                                      .grey
+                                                                      .shade800,
+                                                                  backgroundColor:
+                                                                      AppColor
+                                                                          .highlight,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            TextSpan(
+                                                              children: TextHighlighter.highlight(
+                                                                source: company
+                                                                    .isin
+                                                                    .substring(
+                                                                      company
+                                                                              .isin
+                                                                              .length -
+                                                                          4,
+                                                                    ),
+                                                                query: query,
+                                                                normalStyle: const TextStyle(
+                                                                  fontSize: 14,
+                                                                  height: 1.5,
+
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
+                                                                  color: Colors
+                                                                      .black,
+                                                                ),
+                                                                highlightStyle: const TextStyle(
+                                                                  fontSize: 14,
+                                                                  height: 1.5,
+
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w400,
+                                                                  color: Colors
+                                                                      .black,
+                                                                  backgroundColor:
+                                                                      AppColor
+                                                                          .highlight,
+                                                                ),
                                                               ),
                                                             ),
                                                           ],
                                                         ),
                                                       ),
-                                                      const SizedBox(height: 2),
-                                                      Text(
-                                                        "${company.rating} ● ${company.companyName}",
-                                                        style: TextStyle(
-                                                          fontSize: 10,
-                                                          overflow: TextOverflow
-                                                              .ellipsis,
-                                                          color: AppColor
-                                                              .primaryFont,
+
+                                                      Text.rich(
+                                                        TextSpan(
+                                                          children: TextHighlighter.highlight(
+                                                            source:
+                                                                "${company.rating} ● ${company.companyName}",
+                                                            query: query,
+                                                            normalStyle: TextStyle(
+                                                              fontSize: 10,
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
+                                                              color: AppColor
+                                                                  .primaryFont,
+                                                            ),
+                                                            highlightStyle: TextStyle(
+                                                              fontSize: 10,
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
+                                                              color: AppColor
+                                                                  .primaryFont,
+                                                              backgroundColor:
+                                                                  AppColor
+                                                                      .highlight,
+                                                            ),
+                                                          ),
                                                         ),
                                                       ),
                                                     ],
