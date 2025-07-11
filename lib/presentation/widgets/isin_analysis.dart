@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:tap/presentation/widgets/graph.dart';
 
@@ -91,7 +92,6 @@ class _IsinAnalysisState extends State<IsinAnalysis> {
                                     showEbitda = true;
                                   });
                                 }, true),
-
                                 toggleButton("Revenue", !showEbitda, () {
                                   setState(() {
                                     showEbitda = false;
@@ -110,7 +110,6 @@ class _IsinAnalysisState extends State<IsinAnalysis> {
               ),
               const SizedBox(height: 16),
               Container(
-                padding: const EdgeInsets.all(16.0),
                 width: double.infinity,
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -123,22 +122,25 @@ class _IsinAnalysisState extends State<IsinAnalysis> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.info_outline_rounded,
-                          color: Colors.grey.shade900,
-                        ),
-                        const SizedBox(width: 8),
-                        const Text(
-                          'Issuer Details',
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            height: 1.5,
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.info_outline_rounded,
+                            color: Colors.grey.shade900,
                           ),
-                        ),
-                      ],
+                          const SizedBox(width: 8),
+                          const Text(
+                            'Issuer Details',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              height: 1.5,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                     Divider(
                       color: Colors.grey.shade300,
@@ -146,35 +148,46 @@ class _IsinAnalysisState extends State<IsinAnalysis> {
                       height: 24,
                     ),
                     const SizedBox(height: 8),
-                    issuerDetails(
-                      "Issuer Name",
-                      data["issuer_details"]["issuer_name"],
-                    ),
-                    issuerDetails(
-                      "Type of Issuer",
-                      data["issuer_details"]["type_of_issuer"],
-                    ),
-                    issuerDetails("Sector", data["issuer_details"]["sector"]),
-                    issuerDetails(
-                      "Industry",
-                      data["issuer_details"]["industry"],
-                    ),
-                    issuerDetails(
-                      "Issuer Nature",
-                      data["issuer_details"]["issuer_nature"],
-                    ),
-                    issuerDetails("CIN", data["issuer_details"]["cin"]),
-                    issuerDetails(
-                      "Lead Manager",
-                      data["issuer_details"]["lead_manager"],
-                    ),
-                    issuerDetails(
-                      "Registrar",
-                      data["issuer_details"]["registrar"],
-                    ),
-                    issuerDetails(
-                      "Debenture Trustee",
-                      data["issuer_details"]["debenture_trustee"],
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          issuerDetails(
+                            "Issuer Name",
+                            data["issuer_details"]["issuer_name"],
+                          ),
+                          issuerDetails(
+                            "Type of Issuer",
+                            data["issuer_details"]["type_of_issuer"],
+                          ),
+                          issuerDetails(
+                            "Sector",
+                            data["issuer_details"]["sector"],
+                          ),
+                          issuerDetails(
+                            "Industry",
+                            data["issuer_details"]["industry"],
+                          ),
+                          issuerDetails(
+                            "Issuer Nature",
+                            data["issuer_details"]["issuer_nature"],
+                          ),
+                          issuerDetails("CIN", data["issuer_details"]["cin"]),
+                          issuerDetails(
+                            "Lead Manager",
+                            data["issuer_details"]["lead_manager"],
+                          ),
+                          issuerDetails(
+                            "Registrar",
+                            data["issuer_details"]["registrar"],
+                          ),
+                          issuerDetails(
+                            "Debenture Trustee",
+                            data["issuer_details"]["debenture_trustee"],
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -221,7 +234,10 @@ Widget toggleButton(
   bool isLeft,
 ) {
   return GestureDetector(
-    onTap: onTap,
+    onTap: () {
+      HapticFeedback.lightImpact();
+      onTap();
+    },
     child: Container(
       padding: const EdgeInsets.symmetric(horizontal: 8),
       decoration: BoxDecoration(

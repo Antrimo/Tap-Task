@@ -1,40 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tap/bloc/company_cubit.dart';
 import 'package:tap/color.dart';
 import 'package:tap/models/company_detail_model.dart';
 import 'package:tap/presentation/widgets/isin_analysis.dart';
 import 'package:tap/presentation/widgets/pros_and_cons.dart';
-import 'package:tap/services/api_services.dart';
 
-class DetailScreen extends StatefulWidget {
+class DetailScreen extends StatelessWidget {
   const DetailScreen({super.key});
-
-  @override
-  State<DetailScreen> createState() => _DetailScreenState();
-}
-
-class _DetailScreenState extends State<DetailScreen> {
-  late Future<CompanyDetailModel> companyData;
-
-  @override
-  void initState() {
-    super.initState();
-    companyData = ApiServices.fetchDetail();
-  }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: FutureBuilder<CompanyDetailModel>(
-          future: companyData,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (snapshot.hasError) {
-              return Center(child: Text('Error::: ${snapshot.error}'));
+        body: BlocBuilder<CompanyDetailCubit, CompanyDetailModel?>(
+          builder: (context, data) {
+            if (data == null) {
+              return Center(child: CircularProgressIndicator());
             }
-
-            final data = snapshot.data!;
 
             return DefaultTabController(
               length: 2,
@@ -45,6 +29,7 @@ class _DetailScreenState extends State<DetailScreen> {
                     padding: const EdgeInsets.all(20.0),
                     child: GestureDetector(
                       onTap: () {
+                        HapticFeedback.lightImpact();
                         Navigator.pop(context);
                       },
                       child: Container(
@@ -83,18 +68,29 @@ class _DetailScreenState extends State<DetailScreen> {
                               height: 60,
                               width: 60,
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(16),
+                                borderRadius: BorderRadius.circular(12),
                                 border: Border.all(
-                                  color: const Color(0xFFE2E8F0),
+                                  color: AppColor.border,
                                   width: 1.0,
                                 ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.1),
+                                    offset: Offset(0, 2),
+                                    blurRadius: 6,
+                                    spreadRadius: -1,
+                                  ),
+                                ],
                               ),
-                              child: Image.network(
-                                data.logo,
-                                height: 48,
-                                width: 48,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(12),
+                                child: Image.network(
+                                  data.logo,
+                                  fit: BoxFit.cover,
+                                ),
                               ),
                             ),
+
                             const SizedBox(height: 12),
                             Text(
                               data.companyName,

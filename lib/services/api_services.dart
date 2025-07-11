@@ -8,7 +8,7 @@ class ApiServices {
   static const String listURL = 'https://eol122duf9sy4de.m.pipedream.net/';
   static const String detailURL = 'https://eo61q3zd4heiwke.m.pipedream.net/';
 
-  static Future<List<CompanyListModel>> fetchList() async {
+  Future<List<CompanyListModel>> fetchList() async {
     final response = await http.get(Uri.parse(listURL));
 
     if (response.statusCode == 200) {
@@ -21,7 +21,7 @@ class ApiServices {
     }
   }
 
-  static Future<CompanyDetailModel> fetchDetail() async {
+  Future<CompanyDetailModel> fetchDetail() async {
     final response = await http.get(Uri.parse(detailURL));
 
     if (response.statusCode == 200) {
