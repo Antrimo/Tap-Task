@@ -10,4 +10,5 @@ class AppColor {
   static const Color blue = Colors.blue;
   static const Color neutral = Color.fromRGBO(163, 163, 163, 1);
   static const Color border = Color(0xFFE5E7EB);
+  static const Color highlight = Color.fromRGBO(249, 233, 215, 1);
 }
